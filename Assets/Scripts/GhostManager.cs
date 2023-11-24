@@ -47,7 +47,7 @@ public class GhostManager : MonoBehaviour
 
             case GhostState.hostile:
                 Ghost.spawnGhost?.Invoke(1);
-                if (gameManager.points >= 15)
+                if (gameManager.points >= 13)
                     currentState = GhostState.dangerous;
                 break;
 

@@ -76,7 +76,7 @@ public class Ghost : MonoBehaviour
                 agent.speed = 5;
                 if (distance < 30)
                     agent.SetDestination(player.position);
-                if (distance > 100)
+                if (distance > 200)
                     FindNewRandomPos();
                 break;
 
