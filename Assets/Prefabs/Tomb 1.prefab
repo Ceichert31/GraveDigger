@@ -102,7 +102,7 @@ MonoBehaviour:
   text: '[E] Dig'
   emptyText: Empty
   animator: {fileID: 8608591524627744354}
-  clip: {fileID: 8300000, guid: f8ee337b3cd08a243abff9d1b046159b, type: 3}
+  clip: {fileID: 8300000, guid: e630c9a06f2e6d446a24cfed19b6b814, type: 3}
 --- !u!64 &458768044804969906
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -135,7 +135,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 028579b69de474f42b1d9c6d944c1a19, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 0834f7f99d507114e95b5be0e4b8832e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 0.7

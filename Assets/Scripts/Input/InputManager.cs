@@ -110,7 +110,6 @@ public class InputManager : MonoBehaviour
 
         return moveDirection;
     }
-    private Vector2 lookForce;
     void Look()
     {
         Vector2 lookForce = playerActions.Look.ReadValue<Vector2>();
@@ -121,6 +120,6 @@ public class InputManager : MonoBehaviour
 
         lookRotation += (-lookForce.y * sensitivity / 100);
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
-        cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
+        cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, 0);
     }
 }

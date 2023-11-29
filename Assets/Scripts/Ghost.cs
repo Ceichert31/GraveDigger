@@ -16,13 +16,13 @@ public class Ghost : MonoBehaviour
 
     public delegate void SpawnGhost(int num);
     public static SpawnGhost spawnGhost;
-    private bool timid;
     private float waitTime = 10;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameManager.findPlayer?.Invoke();
+        FindNewRandomPos();
     }
 
     // Update is called once per frame
