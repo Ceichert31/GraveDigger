@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: '[E] Dig'
-  emptyText: Empty
+  emptyText: 
   animator: {fileID: 8608591524627744354}
   clip: {fileID: 8300000, guid: e630c9a06f2e6d446a24cfed19b6b814, type: 3}
 --- !u!64 &458768044804969906

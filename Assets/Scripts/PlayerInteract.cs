@@ -14,6 +14,7 @@ public class PlayerInteract : MonoBehaviour
 
     [Header("Interact Settings")]
     [SerializeField] private TextMeshProUGUI textPrompt;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -30,7 +31,6 @@ public class PlayerInteract : MonoBehaviour
     {
         interact.Disable();
     }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == 7)

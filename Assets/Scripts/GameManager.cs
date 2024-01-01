@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     public int points = 0;
 
-
     [SerializeField] private TextMeshProUGUI score;
 
     private void CollectedCoffin()

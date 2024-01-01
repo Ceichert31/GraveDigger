@@ -27,6 +27,9 @@ public class Headbob : MonoBehaviour
     }
     private void Update()
     {
+        if (inputManager._isUp)
+            return;
+
         HeadbobUpdate();
     }
     void HeadbobUpdate()

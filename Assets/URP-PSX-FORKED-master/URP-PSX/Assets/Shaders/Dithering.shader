@@ -16,7 +16,7 @@
         float _DitherThreshold;
         float _DitherStrength;
         float _DitherScale;
-        
+
         struct appdata
         {
             float4 vertex : POSITION;
@@ -32,7 +32,7 @@
         
         float4x4 GetDitherPattern(uint index)
         {
-            float4x4 pattern;
+            /*float4x4 pattern;
       
             if (index == 0)
             {   
@@ -83,9 +83,37 @@
                     1 , 1 , 1 , 1 ,
                     1 , 1 , 1 , 1 
                 );
-            }
+            }*/
+        float4x4 ditherPatterns[5] =
+            {
+            //Patern 1
+                float4x4(0, 1, 0, 1,
+                        1, 0, 1, 0,
+                        0, 1, 0, 1,
+                        1, 0, 1, 0),
+            //Pattern 2
+                float4x4(0.23, 0.2, 0.6, 0.2,
+                    0.2, 0.43, 0.2, 0.77,
+                    0.88, 0.2, 0.87, 0.2,
+                    0.2, 0.46, 0.2, 0),
+            //Pattern 3
+                float4x4(-4.0, 0.0, -3.0, 1.0,
+                     2.0, -2.0, 3.0, -1.0,
+                     -3.0, 1.0, -4.0, 0.0,
+                     3.0, -1.0, 2.0, -2.0),
+             //Pattern 4 
+                float4x4(1, 0, 0, 1,
+                          0, 1, 1, 0,
+                         0, 1, 1, 0,
+                        1, 0, 0, 1),
+             //Pattern 5 
+                float4x4(1, 1, 1, 1,
+                        1, 1, 1, 1,
+                        1, 1, 1, 1,
+                        1, 1, 1, 1)
+             };
             
-            return _DitherStrength * pattern;
+            return _DitherStrength * ditherPatterns[index];
         }
         
         float PixelBrightness(float3 col)

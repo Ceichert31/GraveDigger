@@ -24,6 +24,9 @@ public class CameraTilt : MonoBehaviour
     }
     private void Update()
     {
+        if (inputManager._isUp)
+            return;
+
         TiltUpdate();
     }
     void TiltUpdate()

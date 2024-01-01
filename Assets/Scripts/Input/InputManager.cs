@@ -28,10 +28,13 @@ public class InputManager : MonoBehaviour
 
     private bool
         isGrounded,
-        isMoving;
+        isMoving,
+        isUp;
 
     public bool _isMoving { get { return isMoving; } }
     public bool _isGrounded { get { return isGrounded; } }
+    public bool _isUp { get { return isUp; } }
+    
 
 
     private Rigidbody rb;
@@ -67,6 +70,11 @@ public class InputManager : MonoBehaviour
             isMoving = true;
         else
             isMoving = false;
+
+        if (lookRotation > 80 || lookRotation < -80)
+            isUp = true;
+        else
+            isUp = false;
     }
     private void LateUpdate()
     {
@@ -120,6 +128,6 @@ public class InputManager : MonoBehaviour
 
         lookRotation += (-lookForce.y * sensitivity / 100);
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
-        cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, 0);
+        cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
     }
 }
