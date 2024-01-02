@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4964264001063100597}
   - component: {fileID: 4683752333801530644}
   - component: {fileID: 3081105494695172213}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SnowTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _affector: {fileID: 1542805198315650773}
-  _doClamp: 1
   _yClamp: {x: 0, y: 0}
   _speed: 1.9
   invertY: 0
@@ -132,7 +131,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1542805198315650773}
-  m_Layer: 0
+  - component: {fileID: 1757856062169515761}
+  m_Layer: 10
   m_Name: TreeHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,3 +155,16 @@ Transform:
   - {fileID: 8969010088907425323}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1757856062169515761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047997210080783883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da08b2b3f8d1e24a8d8367c635df9c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadDistance: 65

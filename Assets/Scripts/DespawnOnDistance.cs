@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class DespawnOnDistance : MonoBehaviour
 {
+    [Header("LOD Settings")]
     private Transform location;
     [SerializeField] private float loadDistance;
     private GameObject child;
-    private void Awake()
+    private void Start()
     {
         location = GameManager.findPlayer.Invoke();
-        child = GetComponentInChildren<GameObject>();
+        child = GetComponentInChildren<Billboard>().gameObject;
     }
     private void Update()
     {
+        //Check if the player is further than the load distance
         if (Vector3.Distance(transform.position, location.position) > loadDistance)
             child.SetActive(false);
         else
