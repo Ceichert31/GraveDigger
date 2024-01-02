@@ -21,7 +21,7 @@ public class Ghost : MonoBehaviour
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        player = GameManager.findPlayer.Invoke();
+        player = GameManager.Instance.player;
         FindNewRandomPos();
     }
 

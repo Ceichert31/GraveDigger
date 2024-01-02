@@ -10,7 +10,7 @@ public class DespawnOnDistance : MonoBehaviour
     private GameObject child;
     private void Start()
     {
-        location = GameManager.findPlayer.Invoke();
+        location = GameManager.Instance.player;
         child = GetComponentInChildren<Billboard>().gameObject;
     }
     private void Update()

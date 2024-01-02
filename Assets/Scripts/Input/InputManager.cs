@@ -130,4 +130,7 @@ public class InputManager : MonoBehaviour
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
         cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
     }
+    public void EnableMovement() => enabled = true;
+    
+    public void DisableMovement() => enabled = false;
 }
