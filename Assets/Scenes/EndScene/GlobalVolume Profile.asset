@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4265a041954897941afec871c608473b, type: 3}
   m_Name: Crt
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   screenBendX:
     m_OverrideState: 1
     m_Value: 1000
@@ -70,7 +70,7 @@ MonoBehaviour:
     m_Value: 2.15
   ditherStrength:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 1.1
   ditherScale:
     m_OverrideState: 1
     m_Value: 2
@@ -125,13 +125,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32eb3b8fb939d9b41b04b5621e6d36dd, type: 3}
   m_Name: Fog
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   fogDensity:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 54.6
   fogDistance:
     m_OverrideState: 1
-    m_Value: 10
+    m_Value: 36.1
   fogColor:
     m_OverrideState: 1
     m_Value: {r: 1, g: 1, b: 1, a: 1}
@@ -155,4 +155,4 @@ MonoBehaviour:
     m_Value: 100
   noiseStrength:
     m_OverrideState: 1
-    m_Value: 0.05
+    m_Value: 0
