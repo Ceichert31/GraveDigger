@@ -17,6 +17,8 @@ public class TreeMimic : MonoBehaviour
     private NavMeshAgent agent;
 
     private Animator anim;
+
+    private float waitTime;
     private void Start()
     {
         player = GameManager.Instance.player;
@@ -36,13 +38,23 @@ public class TreeMimic : MonoBehaviour
         {
             case TreeStates.lurking:
                 anim.SetBool("IsHunting", false);
-                if (Vector3.Distance(transform.position, player.position) < 20)
+                if (Vector3.Distance(transform.position, player.position) < 10)
                     currentState = TreeStates.hunting;
                 break;
 
             case TreeStates.hunting:
                 anim.SetBool("IsHunting", true);
                 agent.SetDestination(player.position);
+
+                if (Vector3.Distance(transform.position, player.position) > 45)
+                {
+                    waitTime += Time.deltaTime;
+                    if (waitTime >= 10)
+                    {
+                        currentState = TreeStates.lurking;
+                        waitTime = 0;
+                    }
+                }
                 break;
         }
     }

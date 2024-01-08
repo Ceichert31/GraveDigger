@@ -51,6 +51,7 @@ public class PauseMenu : MonoBehaviour
             CursorLock.cursorLockHandler?.Invoke(true);
         }
     }
+    public void Quit() => Application.Quit();
     private void OnEnable()
     {
         pause += Pause;
