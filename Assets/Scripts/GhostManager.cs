@@ -94,7 +94,7 @@ public class GhostManager : MonoBehaviour
         minutes = Mathf.FloorToInt(timer / 60);
         seconds = Mathf.FloorToInt(timer % 60);
 
-        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        //timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
         if (seconds > 30 && seconds < 32)
         {

@@ -29,19 +29,21 @@ public class InputManager : MonoBehaviour
     private bool
         isGrounded,
         isMoving,
-        isUp;
+        isUp,
+        disableMovement;
 
     public bool _isMoving { get { return isMoving; } }
     public bool _isGrounded { get { return isGrounded; } }
     public bool _isUp { get { return isUp; } }
-    
-
 
     private Rigidbody rb;
 
     private Camera cam;
 
     private RaycastHit groundHit;
+
+    public delegate void DisableControls();
+    public static DisableControls disableControls;
 
     private void Awake()
     {
@@ -50,15 +52,19 @@ public class InputManager : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         cam = GetComponentInChildren<Camera>();
+
+        playerActions.Pause.performed += CallPause;
     }
 
     private void OnEnable()
     {
         playerActions.Enable();
+        disableControls += DisableMovement;
     }
     private void OnDisable()
     {
         playerActions.Disable();
+        disableControls -= DisableMovement;
     }
     private void Update()
     {
@@ -78,10 +84,16 @@ public class InputManager : MonoBehaviour
     }
     private void LateUpdate()
     {
+        if (disableMovement)
+            return;
+
         Look();
     }
     private void FixedUpdate()
     {
+        if (disableMovement)
+            return;
+
         if (isGrounded)
             Movement();
     }
@@ -130,7 +142,18 @@ public class InputManager : MonoBehaviour
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
         cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
     }
-    public void EnableMovement() => enabled = true;
-    
-    public void DisableMovement() => enabled = false;
+    /// <summary>
+    /// Calls pause delegate from pause menu script
+    /// </summary>
+    /// <param name="ctx"></param>
+    void CallPause(InputAction.CallbackContext ctx)
+    {
+        PauseMenu.pause?.Invoke();
+    }
+    /// <summary>
+    /// Disabled movement when called, renabled when called again
+    /// </summary>
+    void DisableMovement() => disableMovement = !disableMovement;
+    public void DisableScript() => enabled = false;
+    public void EnableScript() => enabled = true;
 }

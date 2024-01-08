@@ -22,6 +22,7 @@ public class Ghost : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameManager.Instance.player;
+
         FindNewRandomPos();
     }
 
