@@ -34,6 +34,7 @@ namespace PSX
         [SerializeField] protected Color fogColor;
         [SerializeField] protected Color ambientColor;
 
+        [SerializeField] protected Color deathFog;
 
         public float getFogDistance => fogDistance;
         public float setFogDistance(float value) => fogDistance = value;
@@ -46,15 +47,17 @@ namespace PSX
         protected void Update()
         {
             this.SetParams();
-            if (gameManager.points >= 27)
+            if (gameManager.points == 3)
             {
-                fogColor = Color.red;
-                RenderSettings.fogColor = Color.red;
+                fog.fogColor.value = deathFog;
+                /*fogColor = Color.red;
+                RenderSettings.fogColor = Color.red;*/
             }
-            if (gameManager.points >= 30)
+            if (gameManager.points <= 0)
             {
-                fogColor = Color.white;
-                RenderSettings.fogColor = Color.white;
+                fog.fogColor.value = fogColor;
+                /*fogColor = Color.white;
+                RenderSettings.fogColor = Color.white;*/
             }
         }
 

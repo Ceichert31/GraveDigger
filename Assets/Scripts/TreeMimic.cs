@@ -46,7 +46,7 @@ public class TreeMimic : MonoBehaviour
                 anim.SetBool("IsHunting", true);
                 agent.SetDestination(player.position);
 
-                if (Vector3.Distance(transform.position, player.position) > 45)
+                if (Vector3.Distance(transform.position, player.position) > 20)
                 {
                     waitTime += Time.deltaTime;
                     if (waitTime >= 10)

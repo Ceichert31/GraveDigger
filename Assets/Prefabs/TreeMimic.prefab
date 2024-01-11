@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2478407452467095415}
   - component: {fileID: 7451459056744248838}
   - component: {fileID: 6766596890602032145}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: SnowTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   - component: {fileID: 150971674249291407}
   - component: {fileID: 7151324154428920314}
   - component: {fileID: 1940794826898860368}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: TreeMimic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,12 +188,12 @@ AudioSource:
   m_GameObject: {fileID: 4522462600045313883}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 834a5813cc6854a4ab99f7865d1ec8bf, type: 2}
   m_audioClip: {fileID: 8300000, guid: 8ce5cb9f1a0a84244a6f9fb58aac9b9f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1.1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

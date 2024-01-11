@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public Transform player;
 
-    public int points = 0;
+    public int points = 30;
 
     [SerializeField] private TextMeshProUGUI score;
 
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void CollectedCoffin()
     {
-        points++;
+        points--;
         score.text = points.ToString();
     }
     private void OnEnable()

@@ -133,11 +133,11 @@ public class InputManager : MonoBehaviour
     void Look()
     {
         Vector2 lookForce = playerActions.Look.ReadValue<Vector2>();
+
         //Turning the gameobject
         gameObject.transform.Rotate(Vector3.up * lookForce.x * sensitivity / 100);
-
+        
         //Rotating the Camera
-
         lookRotation += (-lookForce.y * sensitivity / 100);
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
         cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);

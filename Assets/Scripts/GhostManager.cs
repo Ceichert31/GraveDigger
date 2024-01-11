@@ -41,32 +41,32 @@ public class GhostManager : MonoBehaviour
         switch (currentState)
         {
             case GhostState.passive:
-                if (gameManager.points >= 5)
+                if (gameManager.points == 25)
                     currentState = GhostState.hostile;
                 break;
 
             case GhostState.hostile:
                 Ghost.spawnGhost?.Invoke(1);
-                if (gameManager.points >= 13)
+                if (gameManager.points == 15)
                     currentState = GhostState.dangerous;
                 break;
 
             case GhostState.dangerous:
                 Ghost.spawnGhost?.Invoke(2);
-                if (gameManager.points >= 27)
+                if (gameManager.points == 3)
                     currentState = GhostState.death;
                 break;
 
             case GhostState.death:
                 Ghost.spawnGhost?.Invoke(3);
-                if (gameManager.points >= 30)
+                if (gameManager.points <= 0)
                     currentState = GhostState.end;
                 break;
                 
             case GhostState.end:
                 if (teleported)
                     break;
-                if (gameManager.points >= 30)
+                if (gameManager.points <= 0)
                 {
                     EndingManager.endGame?.Invoke();
                     teleported = true;
