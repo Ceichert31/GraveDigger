@@ -38,7 +38,7 @@ public class TreeMimic : MonoBehaviour
         {
             case TreeStates.lurking:
                 anim.SetBool("IsHunting", false);
-                if (Vector3.Distance(transform.position, player.position) < 10)
+                if (Vector3.Distance(transform.position, player.position) < 7)
                     currentState = TreeStates.hunting;
                 break;
 

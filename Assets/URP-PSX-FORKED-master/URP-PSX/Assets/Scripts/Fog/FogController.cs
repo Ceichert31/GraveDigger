@@ -4,7 +4,6 @@ using UnityEngine.Rendering;
 
 namespace PSX
 {
-    [ExecuteInEditMode]
     public class FogController : MonoBehaviour
     {
         [SerializeField] protected VolumeProfile volumeProfile;
@@ -47,25 +46,17 @@ namespace PSX
         protected void Update()
         {
             this.SetParams();
-            if (gameManager.points == 3)
-            {
-                fog.fogColor.value = deathFog;
-                /*fogColor = Color.red;
-                RenderSettings.fogColor = Color.red;*/
-            }
-            if (gameManager.points <= 0)
-            {
+            if (gameManager._points > 3 || gameManager._points <= 0)
                 fog.fogColor.value = fogColor;
-                /*fogColor = Color.white;
-                RenderSettings.fogColor = Color.white;*/
-            }
+            else
+                fog.fogColor.value = deathFog;
         }
 
         protected void SetParams()
         {
             if (!this.isEnabled) return; 
             if (this.volumeProfile == null) return;
-            if (this.fog == null) volumeProfile.TryGet<Fog>(out this.fog);
+            if (this.fog == null) volumeProfile.TryGet(out fog);
             if (this.fog == null) return;
             
             
@@ -77,10 +68,8 @@ namespace PSX
             this.fog.fogThinning.value = this.fogThinning;
             this.fog.noiseScale.value = this.noiseScale;
             this.fog.noiseStrength.value = this.noiseStrength;
-            this.fog.fogColor.value = this.fogColor;
             this.fog.ambientColor.value = this.ambientColor;
-            
-            
+
             //ACCESSING PARAMS 
             // this.fog.parameters.value
         }

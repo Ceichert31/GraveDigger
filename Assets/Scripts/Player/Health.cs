@@ -4,28 +4,25 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private SpriteRenderer sprite;
+    [SerializeField] private Animator animator;
     [SerializeField] private int health = 3;
+
     private bool damageDelay;
+
     private float waitTime;
 
+    private AudioSource source;
+    [SerializeField] private AudioClip clip;
+
+    private void Awake()
+    {
+        source = GetComponent<AudioSource>();
+    }
     private void Update()
     {
-        switch (health)
-        {
-            case 3:
-                sprite.color = Color.white;
-                break;
-            case 2:
-                sprite.color = Color.red;
-                break;
-            case 1:
-                sprite.color = Color.black;
-                break;
-            case 0:
-                SceneLoader.loadScene(0);
-                break;
-        }
+        animator.SetInteger("Health", health);
+        if (health <= 0)
+            SceneLoader.loadScene(0);
 
         //Health Regen
         if (health < 3)
@@ -46,6 +43,7 @@ public class Health : MonoBehaviour
 
         if (other.gameObject.layer == 9)
         {
+            source.PlayOneShot(clip);
             health--;
             waitTime = 0;
             damageDelay = true;

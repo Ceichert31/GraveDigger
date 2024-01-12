@@ -10,10 +10,13 @@ public class GameManager : MonoBehaviour
 
     public Transform player;
 
-    public int points = 30;
+    [SerializeField] private int points = 30;
 
     [SerializeField] private TextMeshProUGUI score;
 
+    private Animator animator;
+
+    public int _points { get { return points; } }
     public static GameManager Instance { get; private set; }
 
     private void Awake()
@@ -23,6 +26,8 @@ public class GameManager : MonoBehaviour
             Destroy(this);
         else
             Instance = this;
+
+        animator = score.GetComponent<Animator>();
     }
     /// <summary>
     /// Add one point to the score
@@ -31,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         points--;
         score.text = points.ToString();
+        animator.SetTrigger("Collected");
     }
     private void OnEnable()
     {

@@ -29,7 +29,7 @@ public class Ghost : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance = Vector3.Distance(player.position, transform.position);
+        distance = Vector3.Distance(transform.position, player.position);
     }
     /// <summary>
     /// Find a new random position to move to
@@ -58,6 +58,7 @@ public class Ghost : MonoBehaviour
         {
             //Passive
             case 0:
+                Debug.Log(distance);
                 if (distance < 30)
                     FindNewRandomPos();
                 break;
@@ -73,6 +74,7 @@ public class Ghost : MonoBehaviour
                 }
                 break;
 
+            //Dangerous
             case 2:
                 agent.speed = 5;
                 if (distance < 30)
