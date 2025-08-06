@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject settingsMenu;
 
     private bool paused;
 
@@ -46,6 +47,12 @@ public class PauseMenu : MonoBehaviour
         //Unpause
         else
         {
+            //Update Settings 
+            InputManager.updateSettings?.Invoke();
+
+            //Disable Settings menu first in case player hits escape while in settings
+            settingsMenu.SetActive(false);
+
             //Disabled Pause menu
             pauseMenu.SetActive(false);
 

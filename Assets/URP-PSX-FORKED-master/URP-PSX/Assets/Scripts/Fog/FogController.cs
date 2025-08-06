@@ -46,10 +46,10 @@ namespace PSX
         protected void Update()
         {
             this.SetParams();
-            if (gameManager._points > 3 || gameManager._points <= 0)
-                fog.fogColor.value = fogColor;
-            else
-                fog.fogColor.value = deathFog;
+            if (gameManager._points <= 3)
+                RenderSettings.fogColor = deathFog;
+            if (gameManager._points <= 0)
+                RenderSettings.fogColor = fogColor;
         }
 
         protected void SetParams()
@@ -68,6 +68,7 @@ namespace PSX
             this.fog.fogThinning.value = this.fogThinning;
             this.fog.noiseScale.value = this.noiseScale;
             this.fog.noiseStrength.value = this.noiseStrength;
+            this.fog.fogColor.value = this.fogColor;
             this.fog.ambientColor.value = this.ambientColor;
 
             //ACCESSING PARAMS 

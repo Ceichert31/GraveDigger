@@ -58,7 +58,6 @@ public class Ghost : MonoBehaviour
         {
             //Passive
             case 0:
-                Debug.Log(distance);
                 if (distance < 30)
                     FindNewRandomPos();
                 break;
@@ -87,7 +86,7 @@ public class Ghost : MonoBehaviour
             case 3:
                 agent.SetDestination(player.position);
                 agent.speed = 7;
-                if (distance > 40)
+                if (distance > 60)
                 {
                     FindNewRandomPos();
                 }

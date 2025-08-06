@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
@@ -9,16 +10,22 @@ public class InputManager : MonoBehaviour
     private PlayerControls.MovementActions playerActions;
 
     [Header("Input Refrences")]
-    [SerializeField] private LayerMask groundLayer;
+    [SerializeField]
+    private LayerMask groundLayer;
 
     [Header("Movement Variables")]
     public float speed = 65;
-    public float
-        maxSlopeAngle = 45,
+    public float maxSlopeAngle = 45,
         heightOffset = 1.1f,
         offsetStrength = 200,
         offsetDamper = 10,
         dragRate = 5;
+
+    [SerializeField]
+    private AnimationCurve speedCurve;
+
+    private float RIGIDBODY_RAYDISTANCE => heightOffset + 0.1f;
+    private float SPEED_UP_TIME = 3;
 
     [Header("Turning Variables")]
     public float sensitivity = 30;
@@ -26,15 +33,27 @@ public class InputManager : MonoBehaviour
 
     public Vector2 moveInput;
 
-    private bool
-        isGrounded,
+    private bool isGrounded,
         isMoving,
         isUp,
+        isSprinting,
         disableMovement;
 
-    public bool _isMoving { get { return isMoving; } }
-    public bool _isGrounded { get { return isGrounded; } }
-    public bool _isUp { get { return isUp; } }
+    [SerializeField]
+    private AudioMixer mixer;
+
+    public bool _isMoving
+    {
+        get { return isMoving; }
+    }
+    public bool _isGrounded
+    {
+        get { return isGrounded; }
+    }
+    public bool _isUp
+    {
+        get { return isUp; }
+    }
 
     private Rigidbody rb;
 
@@ -45,6 +64,9 @@ public class InputManager : MonoBehaviour
     public delegate void DisableControls();
     public static DisableControls disableControls;
 
+    public delegate void SetSettings();
+    public static SetSettings updateSettings;
+
     private void Awake()
     {
         playerControls = new PlayerControls();
@@ -52,24 +74,18 @@ public class InputManager : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         cam = GetComponentInChildren<Camera>();
-
-        playerActions.Pause.performed += CallPause;
     }
 
-    private void OnEnable()
-    {
-        playerActions.Enable();
-        disableControls += DisableMovement;
-    }
-    private void OnDisable()
-    {
-        playerActions.Disable();
-        disableControls -= DisableMovement;
-    }
     private void Update()
     {
         //Ground check
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, out groundHit, 1.1f, groundLayer);
+        isGrounded = Physics.Raycast(
+            transform.position,
+            Vector3.down,
+            out groundHit,
+            RIGIDBODY_RAYDISTANCE,
+            groundLayer
+        );
 
         //Movement check
         if (playerActions.Move.IsInProgress())
@@ -82,21 +98,18 @@ public class InputManager : MonoBehaviour
         else
             isUp = false;
     }
+
     private void LateUpdate()
     {
-        if (disableMovement)
-            return;
-
         Look();
     }
+
     private void FixedUpdate()
     {
-        if (disableMovement)
-            return;
-
         if (isGrounded)
             Movement();
     }
+
     private void Movement()
     {
         Vector3 moveForce = MoveDirection() * speed;
@@ -108,40 +121,73 @@ public class InputManager : MonoBehaviour
         if (slopeAngle <= maxSlopeAngle)
         {
             float yOffsetError = (heightOffset - groundHit.distance);
-            //?
             float yOffsetVelocity = Vector3.Dot(Vector3.up, rb.velocity);
-            yOffsetForce = Vector3.up * (yOffsetError * offsetStrength - yOffsetVelocity * offsetDamper);
+            yOffsetForce =
+                Vector3.up * (yOffsetError * offsetStrength - yOffsetVelocity * offsetDamper);
         }
         Vector3 combinedForces = moveForce + yOffsetForce;
         Vector3 dampingForces = rb.velocity * dragRate;
 
         rb.AddForce((combinedForces - dampingForces) * (100 * Time.fixedDeltaTime));
     }
+
     private Vector3 MoveDirection()
     {
         //Reads the x and y inputs
         moveInput = playerActions.Move?.ReadValue<Vector2>() ?? Vector2.zero;
 
         //Determines direction
-        Vector3 moveDirection =
-            (Vector3.ProjectOnPlane(transform.forward, Vector3.up) * moveInput.y +
-            Vector3.ProjectOnPlane(transform.right, Vector3.up) * moveInput.x);
+        Vector3 moveDirection = (
+            Vector3.ProjectOnPlane(transform.forward, Vector3.up) * moveInput.y
+            + Vector3.ProjectOnPlane(transform.right, Vector3.up) * moveInput.x
+        );
         moveDirection.Normalize();
 
         return moveDirection;
     }
+
     void Look()
     {
         Vector2 lookForce = playerActions.Look.ReadValue<Vector2>();
 
         //Turning the gameobject
         gameObject.transform.Rotate(Vector3.up * lookForce.x * sensitivity / 100);
-        
+
         //Rotating the Camera
         lookRotation += (-lookForce.y * sensitivity / 100);
         lookRotation = Mathf.Clamp(lookRotation, -90, 90);
-        cam.transform.eulerAngles = new Vector3(lookRotation, cam.transform.eulerAngles.y, cam.transform.eulerAngles.z);
+        cam.transform.eulerAngles = new Vector3(
+            lookRotation,
+            cam.transform.eulerAngles.y,
+            cam.transform.eulerAngles.z
+        );
     }
+
+    void UpdateSettings()
+    {
+        mixer.SetFloat("MasterVolume", PlayerPrefs.GetFloat("Master") / 100);
+        mixer.SetFloat("AmbienceVolume", PlayerPrefs.GetFloat("Ambient") / 100);
+        mixer.SetFloat("SFXVolume", PlayerPrefs.GetFloat("SFX") / 100);
+
+        sensitivity = PlayerPrefs.GetFloat("Sensitivity");
+    }
+
+    void Sprint(InputAction.CallbackContext ctx)
+    {
+        //isSprinting = !isSprinting;
+        //if (isSprinting)
+        //{
+        //    StopCoroutine(LoseSpeed());
+        //    StartCoroutine(GainSpeed());
+        //}
+
+        //else
+        //{
+        //    StopCoroutine(GainSpeed());
+        //    StartCoroutine(LoseSpeed());
+        //}
+    }
+
     /// <summary>
     /// Calls pause delegate from pause menu script
     /// </summary>
@@ -150,10 +196,42 @@ public class InputManager : MonoBehaviour
     {
         PauseMenu.pause?.Invoke();
     }
+
     /// <summary>
     /// Disabled movement when called, renabled when called again
     /// </summary>
-    void DisableMovement() => disableMovement = !disableMovement;
+    void DisableMovement()
+    {
+        disableMovement = !disableMovement;
+        if (disableMovement)
+        {
+            playerActions.Disable();
+        }
+        else
+        {
+            playerActions.Enable();
+        }
+    }
+
     public void DisableScript() => enabled = false;
+
     public void EnableScript() => enabled = true;
+
+    private void OnEnable()
+    {
+        playerActions.Enable();
+        disableControls += DisableMovement;
+        playerActions.Pause.performed += CallPause;
+        playerActions.Sprint.performed += Sprint;
+        //updateSettings += UpdateSettings;
+    }
+
+    private void OnDisable()
+    {
+        playerActions.Disable();
+        disableControls -= DisableMovement;
+        playerActions.Pause.performed -= CallPause;
+        playerActions.Sprint.performed -= Sprint;
+        //updateSettings -= UpdateSettings;
+    }
 }
